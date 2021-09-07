@@ -223,46 +223,29 @@
         }
     },
     "definitions": {
-        "Addressable": {
+        "ConsumedUnit": {
             "type": "object",
-            "description": "Base schema for adressable entities",
+            "description": "Consumed units for rating",
             "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "unique identifier"
+                "downlinkVolume": {
+                    "type": "integer",
+                    "description": "This field holds the amount of consumed volume in downlink direction."
                 },
-                "href": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "Hyperlink reference"
-                }
-            }
-        },
-        "Entity": {
-            "type": "object",
-            "description": "Base entity schema for use in TMForum Open-APIs",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "unique identifier"
+                "serviceSpecificUnit": {
+                    "type": "integer",
+                    "description": "This field holds the amount of consumed service specific units."
                 },
-                "href": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "Hyperlink reference"
+                "time": {
+                    "type": "integer",
+                    "description": "This field holds the amount of consumed time."
                 },
-                "@baseType": {
-                    "type": "string",
-                    "description": "When sub-classing, this defines the super-class"
+                "totalVolume": {
+                    "type": "integer",
+                    "description": "This field holds the amount of consumed volume in both uplink and downlink directions."
                 },
-                "@schemaLocation": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "A URI to a JSON-Schema file that defines additional attributes and relationships"
-                },
-                "@type": {
-                    "type": "string",
-                    "description": "When sub-classing, this defines the sub-class Extensible name"
+                "uplinkVolume": {
+                    "type": "integer",
+                    "description": "This field holds the amount of consumed volume in uplink direction."
                 }
             }
         },
@@ -285,6 +268,32 @@
                 }
             }
         },
+        "RequestedUnit": {
+            "type": "object",
+            "description": "Requested units for rating",
+            "properties": {
+                "downlinkVolume": {
+                    "type": "integer",
+                    "description": "This field holds the amount of requested volume in downlink direction."
+                },
+                "serviceSpecificUnit": {
+                    "type": "integer",
+                    "description": "This field holds the amount of requested service specific units."
+                },
+                "time": {
+                    "type": "integer",
+                    "description": "This field holds the amount of requested time."
+                },
+                "totalVolume": {
+                    "type": "integer",
+                    "description": "This field holds the amount of requested volume in both uplink and downlink directions."
+                },
+                "uplinkVolume": {
+                    "type": "integer",
+                    "description": "This field holds the amount of requested volume in uplink direction."
+                }
+            }
+        },
         "ServiceRating": {
             "type": "object",
             "description": "Service element for rating",
@@ -292,10 +301,6 @@
                 "billingInfo": {
                     "type": "string",
                     "description": "Description for bill presentation."
-                },
-                "consumedUnit": {
-                    "type": "integer",
-                    "description": "The number of consumed units of the service."
                 },
                 "currentTariff": {
                     "type": "object",
@@ -335,6 +340,12 @@
                 "tariffAfterValidUnits": {
                     "type": "object",
                     "description": "Tariff after all valid units have been used."
+                },
+                "consumedUnit": {
+                    "$ref": "#/definitions/ConsumedUnit"
+                },
+                "requestedUnit": {
+                    "$ref": "#/definitions/RequestedUnit"
                 }
             }
         },
@@ -356,15 +367,6 @@
             "type": "object",
             "description": "Represents a task used to rate product usage",
             "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "unique identifier"
-                },
-                "href": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "Hyperlink reference"
-                },
                 "serviceRating": {
                     "type": "array",
                     "items": {
